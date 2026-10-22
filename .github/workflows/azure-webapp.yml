@@ -1,0 +1,49 @@
+# Builds the React frontend + Express API and deploys both to one
+# Azure App Service (Linux, Node 22).
+#
+# One-time setup:
+#   1. Azure Portal → your Web App → Overview → "Download publish profile"
+#   2. GitHub repo → Settings → Secrets and variables → Actions →
+#      New secret AZURE_WEBAPP_PUBLISH_PROFILE = <contents of that file>
+#   3. Change AZURE_WEBAPP_NAME below to your Web App's name.
+
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: wanderly-teju   # <-- your App Service name
+  NODE_VERSION: '22.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install, lint, build
+        run: |
+          npm ci
+          npm run lint
+          npm run build
+
+      - name: Keep only production dependencies
+        run: npm prune --omit=dev
+
+      - name: Package
+        run: zip -qr release.zip dist server src/data node_modules package.json package-lock.json
+
+      - name: Deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: release.zip

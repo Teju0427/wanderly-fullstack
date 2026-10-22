@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-ink: #101a17;
+  --color-ink-soft: #1a2622;
+  --color-paper: #f7f4ec;
+  --color-paper-soft: #efe9da;
+  --color-teal: #1f4b4a;
+  --color-teal-light: #2f6664;
+  --color-brass: #c6a15b;
+  --color-brass-light: #dcbf85;
+  --color-clay: #9c5b3c;
+  --color-stone: #8a9490;
+  --color-stone-light: #c7cdc7;
+
+  --animate-marquee: marquee 32s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.dark body,
+html.dark body {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+::selection {
+  background-color: var(--color-brass);
+  color: var(--color-ink);
+}
+
+/* thin, elegant scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-stone-light); border-radius: 999px; }
+.dark ::-webkit-scrollbar-thumb { background: var(--color-teal-light); }
+
+/* visible keyboard focus, kept subtle */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* boarding-pass perforation notches — the signature card motif */
+.ticket-notch::before,
+.ticket-notch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  background: var(--color-paper);
+  border-radius: 999px;
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: background-color 0.4s ease;
+}
+.dark .ticket-notch::before,
+.dark .ticket-notch::after {
+  background: var(--color-ink);
+}
+.ticket-notch::before { left: -11px; }
+.ticket-notch::after { right: -11px; }
+
+.ticket-divider {
+  border-top: 2px dashed var(--color-stone-light);
+}
+.dark .ticket-divider {
+  border-top: 2px dashed var(--color-teal-light);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
