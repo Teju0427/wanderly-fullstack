@@ -4,6 +4,29 @@
 
 Wanderly is a full-stack travel discovery app: a React 19 frontend, a Node.js/Express REST API, and an **Azure SQL Database**. The catalog (destinations, experiences, stays) is served from SQL, and each visitor's wishlist, trip plan, contact messages and newsletter sign-ups are stored there too. Frontend and API ship together as **one Azure App Service**.
 
+## 🌐 Live demo
+
+**[wanderly-teju-befehjcsakc3c3cu.centralindia-01.azurewebsites.net](https://wanderly-teju-befehjcsakc3c3cu.centralindia-01.azurewebsites.net)**
+
+API health check: [/api/health](https://wanderly-teju-befehjcsakc3c3cu.centralindia-01.azurewebsites.net/api/health)
+
+> Hosted on Azure free tiers. The first visit after a quiet period can take 30–60 seconds while the app and database wake up.
+
+![Deploy to Azure App Service](https://github.com/Teju0427/wanderly-fullstack/actions/workflows/azure-webapp.yml/badge.svg)
+
+## Team
+
+The work was split equally: each member owned part of the frontend, part of the backend, and one piece of the cloud setup.
+
+| Area | MK Tejaswini ([@Teju0427](https://github.com/Teju0427)) | Manya RI |
+|---|---|---|
+| **Frontend** | Trip Planner with cloud auto-save, Contact and Newsletter forms, API client (`src/lib/api.js`) | Home, Explore and Destination pages, catalog and wishlist state (`CatalogContext`, `WishlistContext`), offline fallback |
+| **Backend** | Express server setup, API validation and request checks (visitor-ID header check, input validation, rate limiting, error handling), trip and contact endpoints | Catalog, wishlist and newsletter endpoints, catalog loading and caching |
+| **Database / Cloud** | Azure deployment: App Service, environment configuration, GitHub Actions CI/CD | Azure SQL Database: schema design (15 tables), constraints, seed data |
+| **Testing** | Live deployment testing (health check, trip and contact flows) | Data verification in the Azure Query editor (catalog, wishlist rows) |
+
+B.Tech, Artificial Intelligence and Data Science, REVA University, Bengaluru.
+
 ## Features
 
 - **Home**: hero with search, trending destinations, popular experiences, featured stays, travel inspiration, testimonials.
@@ -145,7 +168,7 @@ On first boot the server creates all tables and seeds the catalog (`DB_AUTO_MIGR
 4. Edit `AZURE_WEBAPP_NAME` in `.github/workflows/azure-webapp.yml` to your app's name.
 5. Push to `main`. The workflow builds and deploys automatically.
 
-Check `https://<your-app>.azurewebsites.net/api/health`. It should return `{"status":"ok","database":"connected"}`.
+Check `https://<your-app>.azurewebsites.net/api/health` (ours: [live health check](https://wanderly-teju-befehjcsakc3c3cu.centralindia-01.azurewebsites.net/api/health)). It should return `{"status":"ok","database":"connected"}`.
 
 ### Alternative: Azure CLI (no GitHub)
 
