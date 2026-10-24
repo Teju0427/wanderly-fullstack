@@ -18,15 +18,6 @@ API health check: [/api/health](https://wanderly-teju-befehjcsakc3c3cu.centralin
 
 The work was split equally: each member owned part of the frontend, part of the backend, and one piece of the cloud setup.
 
-| Area | MK Tejaswini ([@Teju0427](https://github.com/Teju0427)) | Manya RI |
-|---|---|---|
-| **Frontend** | Trip Planner with cloud auto-save, Contact and Newsletter forms, API client (`src/lib/api.js`) | Home, Explore and Destination pages, catalog and wishlist state (`CatalogContext`, `WishlistContext`), offline fallback |
-| **Backend** | Express server setup, API validation and request checks (visitor-ID header check, input validation, rate limiting, error handling), trip and contact endpoints | Catalog, wishlist and newsletter endpoints, catalog loading and caching |
-| **Database / Cloud** | Azure deployment: App Service, environment configuration, GitHub Actions CI/CD | Azure SQL Database: schema design (15 tables), constraints, seed data |
-| **Testing** | Live deployment testing (health check, trip and contact flows) | Data verification in the Azure Query editor (catalog, wishlist rows) |
-
-B.Tech, Artificial Intelligence and Data Science, REVA University, Bengaluru.
-
 ## Features
 
 - **Home**: hero with search, trending destinations, popular experiences, featured stays, travel inspiration, testimonials.
